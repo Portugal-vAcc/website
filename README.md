@@ -1,6 +1,8 @@
-# \<portugal-vacc\>
+# Portugal-vAcc website
 
-VATSIM&#39;s Portugal vAcc website
+VATSIM's Portugal vAcc website
+
+Live preview at [portugal-vacc.github.io/website](https://portugal-vacc.github.io/live-preview/)
 
 ## Install the Polymer-CLI
 
