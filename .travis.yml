@@ -16,14 +16,12 @@ before_script:
 - bower install
 script:
 - polymer build
-after_success:
-- wget -O build/github.io/README.md https://raw.githubusercontent.com/Portugal-vAcc/website/master/README.md
 deploy:
   provider: pages
   local-dir: build/github.io
-  repo: Portugal-vAcc/live-preview
-  target-branch: master
+  repo: Portugal-vAcc/website
+  target-branch: gh-pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
   on:
-    branch: master
+    branch: gh-pages
