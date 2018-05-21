@@ -1,0 +1,84 @@
+<link rel="import"
+      href="../../../bower_components/polymer/polymer-element.html">
+
+<link rel="import"
+      href="../../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import"
+      href="../../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import"
+      href="../../../bower_components/iron-list/iron-list.html">
+<link rel="import"
+      href="../../../bower_components/paper-fab/paper-fab.html">
+<link rel="import"
+      href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import"
+      href="../../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import"
+      href="./vacc-news-list-item.html">
+
+<dom-module id="vacc-news-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      paper-fab {
+        position: absolute;
+        bottom: 23px;
+        right: 23px;
+      }
+    </style>
+    <app-header reveals>
+      <app-toolbar>
+        <div main-title>News</div>
+        <paper-icon-button icon="more-vert"></paper-icon-button>
+      </app-toolbar>
+    </app-header>
+    <paper-fab on-tap="_dispatchAdd" icon="add"></paper-fab>
+
+    <div role="list">
+      <iron-list items="[[collection]]">
+        <template>
+          <vacc-news-list-item document="[[item]]"
+                               on-tap="_handleDocumentTap"
+                               ></vacc-news-list-item>
+        </template>
+      </iron-list>
+    </div>
+  </template>
+
+  <script>
+    class VaccNewsList extends Polymer.Element {
+      static get is() { return 'vacc-news-list'; }
+
+      static get properties() {
+        return {
+          collection: {
+            type: Array,
+            reflectedToAttribute: true
+          },
+          lastSelected: {
+            type: Object,
+            reflectedToAttribute: true,
+            notify: true,
+            value: null
+          }
+        }
+      };
+
+      _dispatchAdd() {
+        this.dispatchEvent(new CustomEvent('add-tap'));
+      }
+
+      _handleDocumentTap(e) {
+        console.log(e);
+        this.lastSelected = e.model.item;
+        this.dispatchEvent(new CustomEvent('document-tap'));
+      }
+    }
+
+    window.customElements.define(VaccNewsList.is, VaccNewsList);
+  </script>
+</dom-module>

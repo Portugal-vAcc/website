@@ -1,0 +1,77 @@
+<link rel="import"
+      href="../../../bower_components/polymer/polymer-element.html">
+
+<link rel="import"
+      href="../../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="vacc-news-data">
+  <template>
+    <iron-ajax id="api"
+               url="https://vaccpt-datapi.herokuapp.com/news/{{lastDocument._id}}"
+               content-type="application/json"
+               on-response="_handleResponse"
+               on-error="_handleError"
+               debounce-duration="300"><iron-ajax>
+  </template>
+
+  <script>
+    class VaccNewsData extends Polymer.Element {
+      static get is() { return 'vacc-news-data'; }
+
+      static get properties() {
+        return {
+          lastCollection: {
+            type: Array,
+            reflectedToAttribute: true,
+            notify: true,
+            value: []
+          },
+          lastDocument: {
+            type: Object,
+            reflectedToAttribute: true,
+            notify: true,
+            value: {}
+          }
+        };
+      }
+
+      save() {
+        this.$.api.body = this.lastDocument;
+        if (this.lastDocument.hasOwnProperty('_id')) {
+          this.$.api.method = "PATCH";
+          this.$.api.headers = {
+            'content-type': 'application/json',
+            'if-match': this.lastDocument._etag
+          }
+        } else {
+          this.$.api.method = "POST";
+        }
+        this.$.api.generateRequest();
+      }
+
+      list() {
+        this.$.api.method = 'GET';
+        this._id = null;
+
+        this.$.api.generateRequest();
+      }
+
+      _handleResponse() {
+        let response = this.$.api.lastResponse;
+        if (response.hasOwnProperty('_items')) {
+          this.lastCollection = response['_items'];
+          this.dispatchEvent(new CustomEvent('collection-changed'));
+        } else if (response.hasOwnProperty('_id')){
+          Object.assign(this.lastDocument, response);
+          this.dispatchEvent(new CustomEvent('document-changed'));
+        }
+      }
+
+      _handleError() {
+        console.log(this.$.api.lastError);
+      }
+    }
+
+    window.customElements.define(VaccNewsData.is, VaccNewsData);
+  </script>
+</dom-module>

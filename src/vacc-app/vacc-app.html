@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
-<link rel="import" href="./vacc-news/vacc-news-edit.html">
+<link rel="import" href="./vacc-news/vacc-news-manage.html">
 
 <dom-module id="vacc-app">
   <template>
@@ -10,29 +10,14 @@
         display: block;
       }
     </style>
-    <vacc-news-edit id="news"></vacc-news-edit>
-    <paper-fab on-tap="newsCreate"></paper-fab>
+    <app-location route="{{route}}"
+                  url-space-regex="^[[rootPath]]"></app-location>
+    <vacc-news-manage route="{{route}}"></vacc-news-manage>
   </template>
 
   <script>
-    /**
-     * @customElement
-     * @polymer
-     */
     class VaccApp extends Polymer.Element {
       static get is() { return 'vacc-app'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'vacc-app'
-          }
-        };
-      }
-
-      newsCreate() {
-        this.$.news.create();
-      }
     }
 
     window.customElements.define(VaccApp.is, VaccApp);

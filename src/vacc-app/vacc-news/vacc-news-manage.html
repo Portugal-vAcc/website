@@ -1,0 +1,133 @@
+<link rel="import"
+      href="../../../bower_components/polymer/polymer-element.html">
+
+<link rel="import"
+      href="../../../bower_components/app-route/app-location.html">
+<link rel="import"
+      href="../../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import"
+      href="../../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import"
+      href="../../../bower_components/paper-fab/paper-fab.html">
+<link rel="import"
+      href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import"
+      href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import"
+      href="../../../bower_components/app-route/app-route.html">
+<link rel="import"
+      href="../../../bower_components/app-route/app-location.html">
+<link rel="import"
+      href="../../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import"
+      href="./vacc-news-data.html">
+<link rel="import"
+      href="./vacc-news-edit.html">
+<link rel="import"
+      href="./vacc-news-view.html">
+<link rel="import"
+      href="./vacc-news-list.html">
+
+<dom-module id="vacc-news-manage">
+  <template is="dom-bind">
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <vacc-news-data id="api"
+                    last-collection="{{lastCollection}}"
+                    last-document="{{lastDocument}}"></vacc-news-data>
+
+    <app-route route="{{route}}"
+               pattern="/manage/:page"
+               data="{{routeData}}"
+               tail="{{tail}}"></app-route>
+    <iron-pages selected="{{page}}" attr-for-selected="page">
+
+      <vacc-news-edit page="edit"
+                      document="{{lastDocument}}"
+                      on-save-tap="_handleSaveTap"></vacc-news-edit>
+
+      <vacc-news-view page="view"
+                      document="{{lastDocument}}"
+                      on-edit-tap="_handleEditTap"></vacc-news-view>
+
+      <vacc-news-list page="list"
+                      collection="[[lastCollection]]"
+                      last-selected="{{lastDocument}}"
+                      on-document-tap="_handleDocumentTap"
+                      on-add-tap="_handleAddTap"
+                      ></vacc-news-list>
+    </iron-pages>
+  </template>
+
+  <script>
+    class VaccNewsManage extends Polymer.Element {
+      static get is() { return 'vacc-news-manage'; }
+
+      static get properties() {
+        return {
+          route: {
+            type: String,
+            reflectedToAttribute: true,
+            notify: true
+          },
+          routeData: Object,
+          page: String,
+          lastDocument: {
+            type: Object,
+            value: {}
+          }
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)'
+        ];
+      }
+
+      ready() {
+        super.ready();
+
+        this.$.api.list();
+      }
+
+      _routePageChanged(page) {
+        console.log(this.route);
+        switch (page) {
+          case 'list':
+          case 'edit':
+          case 'view':
+            this.page = page;
+            break;
+        }
+      }
+
+      _handleDocumentTap() {
+        this.set('route.path', '/manage/view/' + this.lastDocument._id);
+      }
+
+      _handleEditTap() {
+        this.set('route.path', '/manage/edit/' + this.lastDocument._id);
+      }
+
+      _handleAddTap() {
+        let metafields = ['_id', '_created', '_updated', '_etag'];
+        metafields.forEach(function(field) {
+          delete this.lastDocument[field];
+        }, this);
+        this.set('route.path', '/manage/edit');
+      }
+
+      _handleSaveTap() {
+        this.$.api.save();
+      }
+    }
+
+    window.customElements.define(VaccNewsManage.is, VaccNewsManage);
+  </script>
+</dom-module>

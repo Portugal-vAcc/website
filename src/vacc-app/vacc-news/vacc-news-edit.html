@@ -6,9 +6,24 @@
 <link rel="import"
       href="../../../bower_components/paper-input/paper-input.html">
 <link rel="import"
+      href="../../../bower_components/paper-fab/paper-fab.html">
+<link rel="import"
       href="../../../bower_components/paper-input/paper-textarea.html">
 <link rel="import"
       href="../../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import"
+      href="../../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import"
+      href="../../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import"
+      href="../../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import"
+      href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import"
+      href="../../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+
+<link rel="import"
+      href="./vacc-news-data.html">
 
 <dom-module id="vacc-news-edit">
   <template>
@@ -17,64 +32,39 @@
         display: block;
       }
     </style>
+    <app-header reveals>
+      <app-toolbar>
+        <paper-icon-button icon="done"
+                           on-tap="_dispatchSave"></paper-icon-button>
+        <h4 main-title>Edit {{document.title}}</h4>
+      </app-toolbar>
+    </app-header>
 
-    <paper-input label="Awesome Title Announcement" value="{{title}}">
+    <paper-input label="Title"
+                 value="{{document.title}}">
     </paper-input>
-    <paper-textarea label="Markdown powered content" value="{{content}}">
+    <paper-textarea label="Content"
+                    value="{{document.content}}">
     </paper-textarea>
-
-    <iron-ajax id="api"
-               url="https://vaccpt-datapi.herokuapp.com/news/{{documentId}}"
-               content-type="application/json"
-               on-response="_handleResponse"
-               last-response="{{lastResponse}}"
-               debounce-duration="300"><iron-ajax>
   </template>
 
   <script>
-    /**
-     * @customElement
-     * @polymer
-     * vAcc News edit view, for paper card
-     */
     class VaccNewsEdit extends Polymer.Element {
       static get is() { return 'vacc-news-edit'; }
 
       static get properties() {
         return {
-          documentId: {
-            type: String,
+          document: {
+            type: Object,
             reflectedToAttribute: true,
-            value: null
-          },
-          documentEtag: {
-            type: String,
-            reflectedToAttribute: true,
-            value: null
+            notify: true,
+            value: {}
           }
         };
       }
 
-      create() {
-        if (this.documentId === null || this.documentEtag === null) {
-          this.$.api.method = "POST";
-        } else {
-          this.$.api.method = "PATCH";
-          this.$.api.headers = {
-            'content-type': 'application/json',
-            'if-match': this.documentEtag
-          };
-        }
-        this.$.api.body = {
-          "title": this.title,
-          "content": this.content
-        }
-        this.$.api.generateRequest();
-      }
-
-      _handleResponse() {
-        this.documentId = this.lastResponse._id;
-        this.documentEtag = this.lastResponse._etag
+      _dispatchSave() {
+        this.dispatchEvent(new CustomEvent('save-tap'));
       }
     }
 
