@@ -1,0 +1,7 @@
+{
+  "name": "portugal-vacc",
+  "short_name": "portugal-vacc",
+  "description": "VATSIM&#39;s Portugal vAcc website",
+  "start_url": "/",
+  "display": "standalone"
+}
