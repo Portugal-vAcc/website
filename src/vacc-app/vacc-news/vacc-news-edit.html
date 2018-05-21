@@ -1,0 +1,83 @@
+<link rel="import"
+      href="../../../bower_components/polymer/polymer-element.html">
+
+<link rel="import"
+      href="../../../bower_components/marked-element/marked-element.html">
+<link rel="import"
+      href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import"
+      href="../../../bower_components/paper-input/paper-textarea.html">
+<link rel="import"
+      href="../../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="vacc-news-edit">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <paper-input label="Awesome Title Announcement" value="{{title}}">
+    </paper-input>
+    <paper-textarea label="Markdown powered content" value="{{content}}">
+    </paper-textarea>
+
+    <iron-ajax id="api"
+               url="https://vaccpt-datapi.herokuapp.com/news/{{documentId}}"
+               content-type="application/json"
+               on-response="_handleResponse"
+               last-response="{{lastResponse}}"
+               debounce-duration="300"><iron-ajax>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     * vAcc News edit view, for paper card
+     */
+    class VaccNewsEdit extends Polymer.Element {
+      static get is() { return 'vacc-news-edit'; }
+
+      static get properties() {
+        return {
+          documentId: {
+            type: String,
+            reflectedToAttribute: true,
+            value: null
+          },
+          documentEtag: {
+            type: String,
+            reflectedToAttribute: true,
+            value: null
+          }
+        };
+      }
+
+      create() {
+        if (this.documentId === null || this.documentEtag === null) {
+          this.$.api.method = "POST";
+        } else {
+          this.$.api.method = "PATCH";
+          this.$.api.headers = {
+            'content-type': 'application/json',
+            'if-match': this.documentEtag
+          };
+        }
+        this.$.api.body = {
+          "title": this.title,
+          "content": this.content
+        }
+        this.$.api.generateRequest();
+      }
+
+      _handleResponse() {
+        this.documentId = this.lastResponse._id;
+        this.documentEtag = this.lastResponse._etag
+      }
+    }
+
+    window.customElements.define(VaccNewsEdit.is, VaccNewsEdit);
+  </script>
+</dom-module>

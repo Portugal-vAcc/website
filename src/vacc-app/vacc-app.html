@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
-<link rel="import" href="./vacc-news/vacc-news-e.html">
+<link rel="import" href="./vacc-news/vacc-news-edit.html">
 
 <dom-module id="vacc-app">
   <template>
@@ -9,7 +10,8 @@
         display: block;
       }
     </style>
-    <vacc-news-e></vacc-news-e>
+    <vacc-news-edit id="news"></vacc-news-edit>
+    <paper-fab on-tap="newsCreate"></paper-fab>
   </template>
 
   <script>
@@ -26,6 +28,10 @@
             value: 'vacc-app'
           }
         };
+      }
+
+      newsCreate() {
+        this.$.news.create();
       }
     }
 

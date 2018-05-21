@@ -14,36 +14,22 @@
 <link rel="import"
       href="../../../bower_components/iron-ajax/iron-ajax.html">
 
-<dom-module id="vacc-news-e">
+<dom-module id="vacc-news-view">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <paper-tabs selected="{{mode}}" scrollable>
-      <paper-tab>edit</paper-tab>
-      <paper-tab>preview</paper-tab>
-    </paper-tabs>
 
-    <iron-pages selected="{{mode}}">
-      <div>
-        <paper-input label="Awesome Title Announcement" value="{{title}}">
-        </paper-input>
-        <paper-textarea label="Markdown powered content" value="{{content}}">
-        </paper-textarea>
-      </div>
-      <div>
-        <marked-element markdown="[[content]]">
-          <div slot="markdown-html"></div>
-        </marked-element>
-      </div>
-    </iron-pages>
+    <marked-element markdown="[[newsDocument.content]]">
+      <div slot="markdown-html"></div>
+    </marked-element>
 
     <iron-ajax auto
                url="new-news-content.md"
                handle-as="text"
-               last-response="{{content}}"
+               last-response="{{exampleContent.content}}"
                debounce-duration="300"></iron-ajax>
   </template>
 
@@ -53,10 +39,16 @@
      * @polymer
      * vAcc News edit view, for paper card
      */
-    class VaccNewsE extends Polymer.Element {
-      static get is() { return 'vacc-news-e'; }
+    class VaccNewsView extends Polymer.Element {
+      static get is() { return 'vacc-news-view'; }
+
+      static get properties() {
+        return {
+
+        };
+      }
     }
 
-    window.customElements.define(VaccNewsE.is, VaccNewsE);
+    window.customElements.define(VaccNewsView.is, VaccNewsView);
   </script>
 </dom-module>
