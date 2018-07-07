@@ -1,7 +1,21 @@
 {
-  "name": "portugal-vacc",
-  "short_name": "portugal-vacc",
-  "description": "VATSIM&#39;s Portugal vAcc website",
+  "name": "Portugal VACC",
+  "short_name": "Portugal VACC",
+  "description": "Portugal VACC description",
+  "icons": [
+    {
+      "src": "images/manifest/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/manifest/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
   "start_url": "/",
-  "display": "standalone"
+  "display": "standalone",
+  "theme_color": "#00695c",
+  "background_color": "#00695c"
 }
