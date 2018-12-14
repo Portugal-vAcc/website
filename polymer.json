@@ -2,10 +2,13 @@
   "entrypoint": "index.html",
   "shell": "src/vacc-app.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
-    "src/my-view404.html"
+    "src/vacc-home.html",
+    "src/vacc-pilots.html",
+    "src/vacc-controllers.html",
+    "src/vacc-airports.html",
+    "src/vacc-events.html",
+    "src/vacc-about.html",
+    "src/vacc-404.html"
   ],
   "sources": [
     "images/**/*",

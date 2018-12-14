@@ -22,10 +22,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
 
-<link rel="lazy-import" href="my-view1.html">
-<link rel="lazy-import" href="my-view2.html">
-<link rel="lazy-import" href="my-view3.html">
-<link rel="lazy-import" href="my-view404.html">
+<link rel="lazy-import" href="vacc-home.html">
+<link rel="lazy-import" href="vacc-pilots.html">
+<link rel="lazy-import" href="vacc-controllers.html">
+<link rel="lazy-import" href="vacc-airports.html">
+<link rel="lazy-import" href="vacc-events.html">
+<link rel="lazy-import" href="vacc-about.html">
+<link rel="lazy-import" href="vacc-404.html">
 
 <dom-module id="vacc-app">
   <template>
@@ -60,6 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-decoration: none;
         color: var(--app-secondary-color);
         line-height: 40px;
+        margin: 16px 0;
       }
 
       .drawer-list a.iron-selected {
@@ -85,9 +89,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="[[rootPath]]view1">View One</a>
-          <a name="view2" href="[[rootPath]]view2">View Two</a>
-          <a name="view3" href="[[rootPath]]view3">View Three</a>
+          <a name="home" href="[[rootPath]]home">Home</a>
+          <a name="pilots" href="[[rootPath]]pilots">Pilots</a>
+          <a name="controllers" href="[[rootPath]]controllers">Controllers</a>
+          <a name="airports" href="[[rootPath]]airports">Airports</a>
+          <a name="events" href="[[rootPath]]events">Events</a>
+          <a name="" target="_blank" href="http://www.portugal-vacc.org/smf/index.php">Forums</a>
+          <a name="about" href="[[rootPath]]about">About Us</a>
         </iron-selector>
       </app-drawer>
 
@@ -106,10 +114,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          <my-view404 name="view404"></my-view404>
+          <vacc-home name="home"></vacc-home>
+          <vacc-pilots name="pilots"></vacc-pilots>
+          <vacc-controllers name="controllers"></vacc-controllers>
+          <vacc-airports name="airports"></vacc-airports>
+          <vacc-events name="events"></vacc-events>
+          <vacc-about name="about"></vacc-about>
+          <vacc-404 name="404"></vacc-404>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
@@ -157,7 +168,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
-        const resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+        const resolvedPageUrl = this.resolveUrl('vacc-' + page + '.html');
         Polymer.importHref(
             resolvedPageUrl,
             null,
@@ -166,7 +177,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _showPage404() {
-        this.page = 'view404';
+        this.page = '404';
       }
     }
 
