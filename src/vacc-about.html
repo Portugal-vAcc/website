@@ -143,10 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _transposeObjectToArray(obj) {
         if (!obj) { return; }
 
-        return Object.entries(obj).map(function([key, value]) {
-          value.$key = key;
-          return value;
-        });
+        return Object.entries(obj).map(([key, value]) => (Object.assign({$key: key}, value)));
       }
     }
 
