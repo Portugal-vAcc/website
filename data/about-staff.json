@@ -1,0 +1,85 @@
+{
+  "boardOfDirectors": {
+    "ACCPT1": {
+      "title": "Director & Human Resources",
+      "name": "Miguel Frias (acting)",
+      "email": "director@portugal-vacc.org"
+    },
+    "ACCPT2": {
+      "title": "Training Director",
+      "name": "Miguel Frias",
+      "email": "miguel.frias@portugal-vacc.org"
+    },
+    "ACCPT3": {
+      "title": "Lisboa FIR Director",
+      "name": "Duarte Folgado",
+      "email": "duarte.folgado@portugal-vacc.org"
+    },
+    "ACCPT4": {
+      "title": "Events and Public Relations Director",
+      "name": "Fábio Martins",
+      "email": "fabio.martins@portugal-vacc.org"
+    },
+    "ACCPT5": {
+      "title": "Events and Public Relations Assistant",
+      "name": "André Almeida",
+      "email": "andre.almeida@portugal-vacc.org"
+    },
+    "ACCPT6": {
+      "title": "Santa Maria FIR Director",
+      "name": "José Pereira",
+      "email": "jose.pereira@portugal-vacc.org"
+    },
+    "ACCPT7": {
+      "title": "Webmaster",
+      "name": "Miguel Frias",
+      "email": "miguel.frias@portugal-vacc.org"
+    }
+  },
+  "technicalSupport": {
+    "ACCPT2": {
+      "name": "Miguel Frias",
+      "email": "miguel.frias@portugal-vacc.org"
+    },
+    "ACCPT6": {
+      "name": "José Pereira",
+      "email": "jose.pereira@portugal-vacc.org"
+    },
+    "ACCPT40": {
+      "name": "Miguel Branco da Silva",
+      "email": "miguel.silva@portugal-vacc.org"
+    }
+  },
+  "pilotSupport": {
+    "PTD": {
+      "name": "Pilot Training",
+      "email": "ptd@portugal-vacc.org"
+    }
+  },
+  "founders": {
+    "ACCPT40": {
+      "name": "Miguel Branco da Silva",
+      "email": "miguel.silva@portugal-vacc.org"
+    },
+    "ACCPT41": {
+      "name": "Pedro Sousa",
+      "email": "pedro.sousa@portugal-vacc.org"
+    },
+    "ACCPT42": {
+      "name": "Nuno Chambel",
+      "email": "nuno.chambel@portugal-vacc.org"
+    },
+    "ACCPT43": {
+      "name": "Pedro Rodrigues",
+      "email": "pedro.rodrigues@portugal-vacc.org"
+    },
+    "ACCPT44": {
+      "name": "Daniel Gomes",
+      "email": "ddgomes@portugal-vacc.org"
+    }
+  },
+  "honoraryMembers": {
+    "ACCPT100": {"name": "Gonçalo Batista"},
+    "ACCPT101": {"name": "Pedro Gonçalves"}
+  }
+}

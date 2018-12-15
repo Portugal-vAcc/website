@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="vacc-icons.html">
 <link rel="import" href="shared-styles.html">
 
@@ -25,6 +26,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 10px;
       }
     </style>
+
+    <iron-ajax
+      auto
+      url="data/about-staff.json"
+      handle-as="json"
+      last-response="{{raw}}"></iron-ajax>
 
     <div class="card">
       <h1>Portugal Virtual Area Control Center</h1>
@@ -45,39 +52,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h1>Our Staff</h1>
       <h5>Board of Directors</h5>
       <div role="listbox">
-        <paper-item>
-          <paper-item-body two-line>
-            <div>ACCPT1</div>
-            <div secondary>Director & Human Resources</div>
-          </paper-item-body>
-          <paper-item-body>Miguel Frias (acting)</paper-item-body>
-          <a href="mailto:director@portugal-vacc.org"><paper-icon-button icon="vacc-icons:email" alt="send email to Miguel Frias"></paper-icon-button></a>
-        </paper-item>
-
-        <paper-item>
-          <paper-item-body two-line>
-            <div>ACCPT2</div>
-            <div secondary>Training Director</div>
-          </paper-item-body>
-          <paper-item-body>Miguel Frias</paper-item-body>
-          <a href="mailto:miguel.frias@portugal-vacc.org"><paper-icon-button icon="vacc-icons:email" alt="send email to Miguel Frias"></paper-icon-button></a>
-        </paper-item>
+        <template is="dom-repeat" items="[[boardOfDirectors]]">
+          <paper-item>
+            <paper-item-body two-line>
+              <div>[[item.$key]]</div>
+              <div secondary>[[item.title]]</div>
+            </paper-item-body>
+            <paper-item-body>[[item.name]]</paper-item-body>
+            <a href="mailto:[[item.email]]"><paper-icon-button icon="vacc-icons:email" alt="send email to [[item.title]]"></paper-icon-button></a>
+          </paper-item>
+        </template>
       </div>
-
 
       <h5>Technical Support</h5>
       <div role="listbox">
-        <paper-item>
-          <paper-item-body>ACCPT2</paper-item-body>
-          <paper-item-body>Miguel Frias</paper-item-body>
-          <a href="mailto:miguel.frias@portugal-vacc.org"><paper-icon-button icon="vacc-icons:email" alt="send email to Miguel Frias"></paper-icon-button></a>
-        </paper-item>
+        <template is="dom-repeat" items="[[technicalSupport]]">
+          <paper-item>
+            <paper-item-body>[[item.$key]]</paper-item-body>
+            <paper-item-body>[[item.name]]</paper-item-body>
+            <a href="mailto:[[item.email]]"><paper-icon-button icon="vacc-icons:email" alt="send email to [[item.name]]"></paper-icon-button></a>
+          </paper-item>
+        </template>
+      </div>
 
-        <paper-item>
-          <paper-item-body>ACCPT6</paper-item-body>
-          <paper-item-body>José Pereira</paper-item-body>
-          <a href="mailto:jose.pereira@portugal-vacc.org"><paper-icon-button icon="vacc-icons:email" alt="send email to José Pereira"></paper-icon-button></a>
-        </paper-item>
+      <h5>Pilot Support</h5>
+      <div role="listbox">
+        <template is="dom-repeat" items="[[pilotSupport]]">
+          <paper-item>
+            <paper-item-body>[[item.$key]]</paper-item-body>
+            <paper-item-body>[[item.name]]</paper-item-body>
+            <a href="mailto:[[item.email]]"><paper-icon-button icon="vacc-icons:email" alt="send email to [[item.name]]"></paper-icon-button></a>
+          </paper-item>
+        </template>
+      </div>
+
+      <h5>Founders</h5>
+      <div role="listbox">
+        <template is="dom-repeat" items="[[founders]]">
+          <paper-item>
+            <paper-item-body>[[item.$key]]</paper-item-body>
+            <paper-item-body>[[item.name]]</paper-item-body>
+            <a href="mailto:[[item.email]]"><paper-icon-button icon="vacc-icons:email" alt="send email to [[item.name]]"></paper-icon-button></a>
+          </paper-item>
+        </template>
+      </div>
+
+      <h5>Honorary Members</h5>
+      <div role="listbox">
+        <template is="dom-repeat" items="[[honoraryMembers]]">
+          <paper-item>
+            <paper-item-body>[[item.$key]]</paper-item-body>
+            <paper-item-body>[[item.name]]</paper-item-body>
+          </paper-item>
+        </template>
       </div>
     </div>
   </template>
@@ -85,6 +112,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     class VaccAbout extends Polymer.Element {
       static get is() { return 'vacc-about'; }
+      static get properties() {
+        return {
+          raw: {
+            type: Object,
+          },
+          boardOfDirectors: {
+            type: Array,
+            computed: '_transposeObjectToArray(raw.boardOfDirectors)',
+          },
+          technicalSupport: {
+            type: Array,
+            computed: '_transposeObjectToArray(raw.technicalSupport)',
+          },
+          pilotSupport: {
+            type: Array,
+            computed: '_transposeObjectToArray(raw.pilotSupport)',
+          },
+          founders: {
+            type: Array,
+            computed: '_transposeObjectToArray(raw.founders)',
+          },
+          honoraryMembers: {
+            type: Array,
+            computed: '_transposeObjectToArray(raw.honoraryMembers)',
+          }
+        };
+      }
+
+      _transposeObjectToArray(obj) {
+        if (!obj) { return; }
+
+        return Object.entries(obj).map(function([key, value]) {
+          value.$key = key;
+          return value;
+        });
+      }
     }
 
     window.customElements.define(VaccAbout.is, VaccAbout);
